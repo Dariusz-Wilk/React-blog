@@ -3,11 +3,17 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { getPostsById } from '../../../redux/store';
 import { Button } from 'react-bootstrap';
 import EditPost from '../EditPost/EditPost';
+import { useState } from 'react';
+import OpenModal from '../../features/OpenModal/OpenModal';
 
 const SinglePost = () => {
 	const { id } = useParams();
 	const postData = useSelector(state => getPostsById(state, id));
-	console.log(postData);
+
+	const [show, setShow] = useState(false);
+
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
 	if (!postData) return <Navigate to={'/'} />;
 	return (
@@ -18,7 +24,10 @@ const SinglePost = () => {
 					<Link to={`/post/edit/${id}`} element={<EditPost />}>
 						<Button variant="outline-info">Edit</Button>
 					</Link>
-					<Button variant="outline-danger" className="ms-3">
+					<Button
+						variant="outline-danger"
+						className="ms-3"
+						onClick={handleShow}>
 						Delete
 					</Button>
 				</div>
@@ -32,6 +41,8 @@ const SinglePost = () => {
 				{postData.publishedDate}
 			</p>
 			<article>{postData.content}</article>
+
+			<OpenModal show={show} handleClose={handleClose} id={id} />
 		</div>
 	);
 };

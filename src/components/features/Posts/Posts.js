@@ -7,7 +7,7 @@ const Posts = () => {
 	console.log(posts);
 
 	return (
-		<ul className="d-flex flex-wrap justify-content-between p-0 my-4">
+		<ul className="d-flex flex-wrap justify-content-start p-0 my-4">
 			{posts.map(post => (
 				<Post key={post.id} {...post} />
 			))}
