@@ -13,11 +13,13 @@ const PostForm = ({
 	descriptionn = '',
 	mainContentt = '',
 }) => {
-	const [title, setTitle] = useState(titlee);
-	const [author, setAuthor] = useState(authorr);
-	const [publishedDate, setPublishedDate] = useState(publishedDatee);
-	const [description, setDescription] = useState(descriptionn);
-	const [mainContent, setMainContent] = useState(mainContentt);
+	const [formData, setFormData] = useState({
+		title: titlee,
+		author: authorr,
+		publishedDate: publishedDatee,
+		description: descriptionn,
+		mainContent: mainContentt,
+	});
 
 	const postArrLength = useSelector(state => state.posts.length);
 	const newPostId = postArrLength + 1 + '';
@@ -26,11 +28,11 @@ const PostForm = ({
 		e.preventDefault();
 		action({
 			id: actionText === 'Edit post' ? id : newPostId,
-			title,
-			author,
-			publishedDate,
-			shortDescription: description,
-			content: mainContent,
+			title: formData.title,
+			author: formData.author,
+			publishedDate: formData.publishedDate,
+			shortDescription: formData.description,
+			content: formData.mainContent,
 		});
 	};
 
@@ -41,8 +43,13 @@ const PostForm = ({
 				<Form.Control
 					type="text"
 					placeholder="Enter title..."
-					value={title}
-					onChange={e => setTitle(e.target.value)}
+					value={formData.title}
+					onChange={e =>
+						setFormData(prevState => ({
+							...prevState,
+							title: e.target.value,
+						}))
+					}
 				/>
 			</Form.Group>
 			<Form.Group className="mb-3">
@@ -50,8 +57,13 @@ const PostForm = ({
 				<Form.Control
 					type="text"
 					placeholder="Enter author..."
-					value={author}
-					onChange={e => setAuthor(e.target.value)}
+					value={formData.author}
+					onChange={e =>
+						setFormData(prevState => ({
+							...prevState,
+							author: e.target.value,
+						}))
+					}
 				/>
 			</Form.Group>
 			<Form.Group className="mb-3">
@@ -59,16 +71,26 @@ const PostForm = ({
 				<Form.Control
 					type="date"
 					placeholder="Enter published date..."
-					value={publishedDate}
-					onChange={e => setPublishedDate(e.target.value)}
+					value={formData.publishedDate}
+					onChange={e =>
+						setFormData(prevState => ({
+							...prevState,
+							publishedDate: e.target.value,
+						}))
+					}
 				/>
 			</Form.Group>
 			<Form.Group className="mb-3">
 				<Form.Label>Short description:</Form.Label>
 				<Form.Control
 					className={styles.textareaDescription}
-					onChange={e => setDescription(e.target.value)}
-					value={description}
+					onChange={e =>
+						setFormData(prevState => ({
+							...prevState,
+							description: e.target.value,
+						}))
+					}
+					value={formData.description}
 					as="textarea"
 					placeholder="Enter post description..."
 				/>
@@ -78,8 +100,13 @@ const PostForm = ({
 				<Form.Label>Main content:</Form.Label>
 				<Form.Control
 					className={styles.textareaMain}
-					value={mainContent}
-					onChange={e => setMainContent(e.target.value)}
+					value={formData.mainContent}
+					onChange={e =>
+						setFormData(prevState => ({
+							...prevState,
+							mainContent: e.target.value,
+						}))
+					}
 					as="textarea"
 					placeholder="Enter post content..."
 				/>
