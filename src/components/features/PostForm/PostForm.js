@@ -2,6 +2,8 @@ import { Form, Button } from 'react-bootstrap';
 import styles from './PostForm.module.scss';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const PostForm = ({
 	id,
@@ -20,6 +22,7 @@ const PostForm = ({
 		description: descriptionn,
 		mainContent: mainContentt,
 	});
+	const [content, setContent] = useState(mainContentt);
 
 	const postArrLength = useSelector(state => state.posts.length);
 	const newPostId = postArrLength + 1 + '';
@@ -32,7 +35,7 @@ const PostForm = ({
 			author: formData.author,
 			publishedDate: formData.publishedDate,
 			shortDescription: formData.description,
-			content: formData.mainContent,
+			content: content,
 		});
 	};
 
@@ -98,21 +101,15 @@ const PostForm = ({
 
 			<Form.Group className="mb-3">
 				<Form.Label>Main content:</Form.Label>
-				<Form.Control
+				<ReactQuill
 					className={styles.textareaMain}
-					value={formData.mainContent}
-					onChange={e =>
-						setFormData(prevState => ({
-							...prevState,
-							mainContent: e.target.value,
-						}))
-					}
-					as="textarea"
+					value={content}
+					onChange={setContent}
 					placeholder="Enter post content..."
 				/>
 			</Form.Group>
 
-			<Button variant="primary" type="submit">
+			<Button variant="primary" type="submit" className="mt-5">
 				{actionText}
 			</Button>
 		</Form>
