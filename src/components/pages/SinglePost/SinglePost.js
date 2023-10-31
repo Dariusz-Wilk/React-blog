@@ -40,7 +40,7 @@ const SinglePost = () => {
 				<b>Published: </b>
 				{postData.publishedDate}
 			</p>
-			<article>{postData.content}</article>
+			<article dangerouslySetInnerHTML={{ __html: postData.content }}></article>
 
 			<OpenModal show={show} handleClose={handleClose} id={id} />
 		</div>
