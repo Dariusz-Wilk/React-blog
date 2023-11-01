@@ -7,6 +7,7 @@ const initialState = {
 			content: 'Main content of the article',
 			publishedDate: '02-02-2022',
 			author: 'John Doe',
+			category: 'Sport',
 		},
 		{
 			id: '2',
@@ -15,6 +16,7 @@ const initialState = {
 			content: 'Main content of the article number 2',
 			publishedDate: '02-04-2022',
 			author: 'Amanda Brown',
+			category: 'News',
 		},
 		{
 			id: '3',
@@ -23,6 +25,7 @@ const initialState = {
 			content: 'Main content of the article num 3',
 			publishedDate: '12-06-2022',
 			author: 'Steve White',
+			category: 'Movies',
 		},
 	],
 };

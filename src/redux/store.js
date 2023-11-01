@@ -8,6 +8,9 @@ export const getPostsById = ({ posts }, postId) => {
 	return posts.find(post => post.id === postId);
 };
 
+export const filterPostsByCategories = ({ posts }, category) =>
+	posts.filter(post => post.category.toLowerCase() === category);
+
 const subreducers = {
 	posts: postsReducer,
 };

@@ -3,6 +3,8 @@ import PostAdd from './components/pages/PostAdd/PostAdd';
 import SinglePost from './components/pages/SinglePost/SinglePost';
 import About from './components/pages/About/About';
 import NotFound from './components/pages/NotFound/NotFound';
+import Categories from './components/pages/Categories/Categories';
+import SingleCategory from './components/pages/SingleCategory/SingleCategory';
 
 import { Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
@@ -19,6 +21,8 @@ const App = () => {
 				<Route path="/post/add" element={<PostAdd />} />
 				<Route path="/post/:id" element={<SinglePost />} />
 				<Route path="/post/edit/:id" element={<EditPost />} />
+				<Route path="/categories" element={<Categories />} />
+				<Route path="/categories/:category" element={<SingleCategory />} />
 				<Route path="/about" element={<About />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>

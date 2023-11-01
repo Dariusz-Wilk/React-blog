@@ -36,9 +36,13 @@ const SinglePost = () => {
 				<b>Author: </b>
 				{postData.author}
 			</p>
-			<p>
+			<p className="mb-1">
 				<b>Published: </b>
 				{postData.publishedDate}
+			</p>
+			<p>
+				<b>Category: </b>
+				{postData.category}
 			</p>
 			<article dangerouslySetInnerHTML={{ __html: postData.content }}></article>
 

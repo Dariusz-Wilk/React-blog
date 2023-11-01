@@ -22,6 +22,7 @@ const PostForm = ({
 	publishedDatee = new Date(),
 	descriptionn = '',
 	mainContentt = '',
+	categoryy = '',
 }) => {
 	const [formData, setFormData] = useState({
 		title: titlee,
@@ -29,6 +30,7 @@ const PostForm = ({
 		publishedDate: publishedDatee,
 		description: descriptionn,
 		mainContent: mainContentt,
+		category: categoryy,
 	});
 	const [content, setContent] = useState(mainContentt);
 	const [startDate, setStartDate] = useState(publishedDatee);
@@ -48,6 +50,7 @@ const PostForm = ({
 				publishedDate: dateToStr(startDate),
 				shortDescription: formData.description,
 				content: content,
+				category: formData.category,
 			});
 		}
 	};
@@ -101,13 +104,34 @@ const PostForm = ({
 				)}
 			</Form.Group>
 			<Form.Group className="mb-3">
-				<Form.Label>Published:</Form.Label>
-				{<br></br>}
+				<Form.Label className="d-block">Published:</Form.Label>
 				<DatePicker
 					selected={startDate}
 					onChange={date => setStartDate(date)}
 					dateFormat={`dd/MM/yyy`}
 				/>
+			</Form.Group>
+			<Form.Group className="mb-3">
+				<Form.Label>Category:</Form.Label>
+				<Form.Select
+					aria-label="Default select example"
+					value={formData.category}
+					onChange={e =>
+						setFormData(prevState => ({
+							...prevState,
+							category: e.target.value,
+						}))
+					}>
+					<option>Open to select category</option>
+					<option value="Sport">Sport</option>
+					<option value="News">News</option>
+					<option value="Movies">Movies</option>
+				</Form.Select>
+				{errors.author && (
+					<small className="d-block form-text text-danger mt-2">
+						This field is required with minimum 3 characters
+					</small>
+				)}
 			</Form.Group>
 			<Form.Group className="mb-3">
 				<Form.Label>Short description:</Form.Label>

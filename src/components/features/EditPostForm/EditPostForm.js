@@ -29,6 +29,7 @@ const EditPostForm = () => {
 			publishedDatee={new Date(createDateFromView(postData.publishedDate))}
 			descriptionn={postData.shortDescription}
 			mainContentt={postData.content}
+			categoryy={postData.category}
 		/>
 	);
 };
