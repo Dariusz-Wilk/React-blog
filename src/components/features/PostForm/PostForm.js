@@ -11,6 +11,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { dateToStr } from '../../../utils/dateToStr';
 
+import { useForm } from 'react-hook-form';
+
 const PostForm = ({
 	id,
 	action,
@@ -31,28 +33,37 @@ const PostForm = ({
 	const [content, setContent] = useState(mainContentt);
 	const [startDate, setStartDate] = useState(publishedDatee);
 
+	const [contentError, setContentError] = useState(false);
+
 	const postArrLength = useSelector(state => state.posts.length);
 	const newPostId = postArrLength + 1 + '';
 
-	const handleSubmit = e => {
-		e.preventDefault();
-		action({
-			id: actionText === 'Edit post' ? id : newPostId,
-			title: formData.title,
-			author: formData.author,
-			publishedDate: dateToStr(startDate),
-			shortDescription: formData.description,
-			content: content,
-		});
+	const handleSubmit = () => {
+		setContentError(!content);
+		if (content) {
+			action({
+				id: actionText === 'Edit post' ? id : newPostId,
+				title: formData.title,
+				author: formData.author,
+				publishedDate: dateToStr(startDate),
+				shortDescription: formData.description,
+				content: content,
+			});
+		}
 	};
 
-	console.log(new Date(startDate));
+	const {
+		register,
+		handleSubmit: validate,
+		formState: { errors },
+	} = useForm();
 
 	return (
-		<Form className="mt-4" onSubmit={handleSubmit}>
+		<Form className="mt-4" onSubmit={validate(handleSubmit)}>
 			<Form.Group className="mb-3">
 				<Form.Label>Title:</Form.Label>
 				<Form.Control
+					{...register('title', { required: true, minLength: 3 })}
 					type="text"
 					placeholder="Enter title..."
 					value={formData.title}
@@ -63,10 +74,16 @@ const PostForm = ({
 						}))
 					}
 				/>
+				{errors.title && (
+					<small className="d-block form-text text-danger mt-2">
+						This field is required with minimum 3 characters
+					</small>
+				)}
 			</Form.Group>
 			<Form.Group className="mb-3">
 				<Form.Label>Author:</Form.Label>
 				<Form.Control
+					{...register('author', { required: true, minLength: 3 })}
 					type="text"
 					placeholder="Enter author..."
 					value={formData.author}
@@ -77,6 +94,11 @@ const PostForm = ({
 						}))
 					}
 				/>
+				{errors.author && (
+					<small className="d-block form-text text-danger mt-2">
+						This field is required with minimum 3 characters
+					</small>
+				)}
 			</Form.Group>
 			<Form.Group className="mb-3">
 				<Form.Label>Published:</Form.Label>
@@ -90,6 +112,7 @@ const PostForm = ({
 			<Form.Group className="mb-3">
 				<Form.Label>Short description:</Form.Label>
 				<Form.Control
+					{...register('description', { required: true, minLength: 20 })}
 					className={styles.textareaDescription}
 					onChange={e =>
 						setFormData(prevState => ({
@@ -101,6 +124,11 @@ const PostForm = ({
 					as="textarea"
 					placeholder="Enter post description..."
 				/>
+				{errors.description && (
+					<small className="d-block form-text text-danger mt-2">
+						This field is required with minimum 20 characters
+					</small>
+				)}
 			</Form.Group>
 
 			<Form.Group className="mb-3">
@@ -111,6 +139,11 @@ const PostForm = ({
 					onChange={setContent}
 					placeholder="Enter post content..."
 				/>
+				{contentError && (
+					<small className="d-block form-text text-danger mt-2">
+						Content can't be empty
+					</small>
+				)}
 			</Form.Group>
 
 			<Button variant="primary" type="submit" className="mt-5">
