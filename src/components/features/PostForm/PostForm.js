@@ -2,8 +2,14 @@ import { Form, Button } from 'react-bootstrap';
 import styles from './PostForm.module.scss';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import { dateToStr } from '../../../utils/dateToStr';
 
 const PostForm = ({
 	id,
@@ -11,7 +17,7 @@ const PostForm = ({
 	actionText,
 	titlee = '',
 	authorr = '',
-	publishedDatee = '',
+	publishedDatee = new Date(),
 	descriptionn = '',
 	mainContentt = '',
 }) => {
@@ -23,6 +29,7 @@ const PostForm = ({
 		mainContent: mainContentt,
 	});
 	const [content, setContent] = useState(mainContentt);
+	const [startDate, setStartDate] = useState(publishedDatee);
 
 	const postArrLength = useSelector(state => state.posts.length);
 	const newPostId = postArrLength + 1 + '';
@@ -33,11 +40,13 @@ const PostForm = ({
 			id: actionText === 'Edit post' ? id : newPostId,
 			title: formData.title,
 			author: formData.author,
-			publishedDate: formData.publishedDate,
+			publishedDate: dateToStr(startDate),
 			shortDescription: formData.description,
 			content: content,
 		});
 	};
+
+	console.log(new Date(startDate));
 
 	return (
 		<Form className="mt-4" onSubmit={handleSubmit}>
@@ -71,16 +80,11 @@ const PostForm = ({
 			</Form.Group>
 			<Form.Group className="mb-3">
 				<Form.Label>Published:</Form.Label>
-				<Form.Control
-					type="date"
-					placeholder="Enter published date..."
-					value={formData.publishedDate}
-					onChange={e =>
-						setFormData(prevState => ({
-							...prevState,
-							publishedDate: e.target.value,
-						}))
-					}
+				{<br></br>}
+				<DatePicker
+					selected={startDate}
+					onChange={date => setStartDate(date)}
+					dateFormat={`dd/MM/yyy`}
 				/>
 			</Form.Group>
 			<Form.Group className="mb-3">
