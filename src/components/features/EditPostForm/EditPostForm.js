@@ -24,12 +24,12 @@ const EditPostForm = () => {
 			id={id}
 			action={handleSubmit}
 			actionText="Edit post"
-			titlee={postData.title}
-			authorr={postData.author}
-			publishedDatee={new Date(createDateFromView(postData.publishedDate))}
-			descriptionn={postData.shortDescription}
-			mainContentt={postData.content}
-			categoryy={postData.category}
+			postTitle={postData.title}
+			postAuthor={postData.author}
+			postPublishedDate={new Date(createDateFromView(postData.publishedDate))}
+			postDescription={postData.shortDescription}
+			postMainContent={postData.content}
+			postCategory={postData.category}
 		/>
 	);
 };

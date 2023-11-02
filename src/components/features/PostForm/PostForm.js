@@ -17,23 +17,23 @@ const PostForm = ({
 	id,
 	action,
 	actionText,
-	titlee = '',
-	authorr = '',
-	publishedDatee = new Date(),
-	descriptionn = '',
-	mainContentt = '',
-	categoryy = '',
+	postTitle = '',
+	postAuthor = '',
+	postPublishedDate = new Date(),
+	postDescription = '',
+	postMainContent = '',
+	postCategory = '',
 }) => {
 	const [formData, setFormData] = useState({
-		title: titlee,
-		author: authorr,
-		publishedDate: publishedDatee,
-		description: descriptionn,
-		mainContent: mainContentt,
-		category: categoryy,
+		title: postTitle,
+		author: postAuthor,
+		publishedDate: postPublishedDate,
+		description: postDescription,
+		mainContent: postMainContent,
+		category: postCategory,
 	});
-	const [content, setContent] = useState(mainContentt);
-	const [startDate, setStartDate] = useState(publishedDatee);
+	const [content, setContent] = useState(postMainContent);
+	const [startDate, setStartDate] = useState(postPublishedDate);
 
 	const [contentError, setContentError] = useState(false);
 

@@ -6,8 +6,6 @@ const Categories = () => {
 		state => new Set(state.posts.map(post => post.category))
 	);
 
-	console.log([...uniqueCategories]);
-
 	return (
 		<div>
 			{[...uniqueCategories].map(category => (
